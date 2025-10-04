@@ -9,7 +9,7 @@ import ApplicationForm from './components/ApplicationForm';
 function AppContent() {
   const { user, profile, loading } = useAuth();
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
-  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [hasSubmittedApplication, setHasSubmittedApplication] = useState(false);
 
   if (loading) {
     return (
@@ -34,17 +34,17 @@ function AppContent() {
     return <AdminDashboard />;
   }
 
-  if (showApplicationForm) {
+  if (!hasSubmittedApplication) {
     return (
       <ApplicationForm
-        onSuccess={() => setShowApplicationForm(false)}
+        onSuccess={() => setHasSubmittedApplication(true)}
       />
     );
   }
 
   return (
     <CandidateDashboard
-      onNewApplication={() => setShowApplicationForm(true)}
+      onNewApplication={() => setHasSubmittedApplication(false)}
     />
   );
 }
